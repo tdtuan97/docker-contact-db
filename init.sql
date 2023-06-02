@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 
 CREATE TABLE IF NOT EXISTS `tbl_contact_group` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` INT(11) NOT NULL,
     `name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
     `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `is_deleted` TINYINT(1) NOT NULL DEFAULT '0',
