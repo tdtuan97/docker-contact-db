@@ -1,0 +1,44 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: contact_db
+    command: mysqld --sql_mode=""
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: contact_management
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_USER: contact_management
+      MYSQL_PASSWORD: 1
+      SERVICE_NAME: mysql8
+    volumes:
+      #- ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db_data/:/var/lib/mysql
+    networks:
+      - contact-db-network
+
+  cache:
+    image: redis:6.2-alpine
+    container_name: contact_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass contact_management
+    volumes:
+      - cache:/data
+    networks:
+      - contact-db-network
+
+#Docker volumes
+volumes:
+  cache:
+    driver: local
+
+#Docker Networks
+networks:
+  contact-db-network:
