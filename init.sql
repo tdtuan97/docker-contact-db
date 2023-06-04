@@ -17,13 +17,13 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
     `updated_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     `updated_user` VARCHAR(50) NULL DEFAULT 'system' COLLATE 'utf8mb4_unicode_ci',
     PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE INDEX `username` (`username`) USING BTREE,
-    UNIQUE INDEX `email` (`email`) USING BTREE
+    INDEX `username` (`username`) USING BTREE,
+    INDEX `email` (`email`) USING BTREE,
+    INDEX `created_user` (`created_user`) USING BTREE,
     ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `tbl_contact_group` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `user_id` INT(11) NOT NULL,
     `name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
     `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `is_deleted` TINYINT(1) NOT NULL DEFAULT '0',
@@ -32,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `tbl_contact_group` (
     `created_user` VARCHAR(50) NULL DEFAULT 'system' COLLATE 'utf8mb4_unicode_ci',
     `updated_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     `updated_user` VARCHAR(50) NULL DEFAULT 'system' COLLATE 'utf8mb4_unicode_ci',
-    PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE INDEX `name` (`name`) USING BTREE
+    PRIMARY KEY (`id`) USING BTREE
 ) COLLATE='utf8mb4_unicode_ci' ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `tbl_contact` (
@@ -50,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `tbl_contact` (
     `updated_at` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     `updated_user` VARCHAR(50) NULL DEFAULT 'system' COLLATE 'utf8mb4_unicode_ci',
     PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE INDEX `phone_number` (`phone_number`) USING BTREE,
-    UNIQUE INDEX `email` (`email`) USING BTREE
+    INDEX `phone_number` (`phone_number`) USING BTREE,
+    INDEX `email` (`email`) USING BTREE
 ) COLLATE='utf8mb4_unicode_ci' ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `tbl_contact_sharing` (
