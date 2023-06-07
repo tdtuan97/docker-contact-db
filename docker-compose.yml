@@ -1,13 +1,13 @@
 version: '3'
 services:
-  mysql:
+  contact_db:
     image: mysql:5.7
     container_name: contact_db
     command: mysqld --sql_mode=""
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: contact_management
       MYSQL_ROOT_USER: root
@@ -22,7 +22,7 @@ services:
     networks:
       - contact-db-network
 
-  cache:
+  contact_redis:
     image: redis:6.2-alpine
     container_name: contact_redis
     restart: always
@@ -38,6 +38,11 @@ services:
     image: ghcr.io/tdtuan97/contact-backend:latest
     container_name: contact_backend_node
     restart: always
+    depends_on:
+      - contact_db
+      - contact_redis
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     env_file:
       - .env
       - .env.production
