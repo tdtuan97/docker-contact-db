@@ -34,6 +34,19 @@ services:
     networks:
       - contact-db-network
 
+  contact-backend:
+    image: ghcr.io/tdtuan97/contact-backend:latest
+    container_name: contact_backend_node
+    restart: always
+    env_file:
+      - .env
+      - .env.production
+    ports:
+      - "7001:7001"
+    networks:
+      - contact-db-network
+
+
 #Docker volumes
 volumes:
   cache:
