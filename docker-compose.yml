@@ -20,7 +20,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db_data/:/var/lib/mysql
     networks:
-      - contact-db-network
+      - contact-network
 
   contact_redis:
     image: redis:6.2-alpine
@@ -32,7 +32,7 @@ services:
     volumes:
       - cache:/data
     networks:
-      - contact-db-network
+      - contact-network
 
   contact_backend_node:
     image: ghcr.io/tdtuan97/contact-backend:latest
@@ -49,7 +49,7 @@ services:
     #ports:
     #  - "7001:7001"
     networks:
-      - contact-db-network
+      - contact-network
 
   contact_backend_nginx:
     image: nginx:1.21-alpine
@@ -68,7 +68,7 @@ services:
     depends_on:
       - contact_backend_node
     networks:
-      - contact-db-network
+      - contact-network
 
   contact_frontend_nginx:
     image: nginx:1.21-alpine
@@ -85,7 +85,7 @@ services:
       #- /etc/letsencrypt/live/tran.dev.metacrew.vn/fullchain.pem:/etc/nginx/ssl/cert.pem
       #- /etc/letsencrypt/live/tran.dev.metacrew.vn/privkey.pem:/etc/nginx/ssl/private.pem
     networks:
-      - contact-db-network
+      - contact-network
 
 #Docker volumes
 volumes:
@@ -94,4 +94,4 @@ volumes:
 
 #Docker Networks
 networks:
-  contact-db-network:
+  contact-network:
